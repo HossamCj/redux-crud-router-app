@@ -6,15 +6,26 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// Components
+import Index from './pages/index'
 import RootLayout from "./pages/RootLayout";
-
+import AddPost from './pages/AddPost'
+import DetailsPost from './pages/DetailsPost'
+import EditPost from './pages/EditPost'
 
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />
+    element: <RootLayout />,
+    children: [
+      {index: true, element: <Index />},
+      {path: 'posts', element: <Index />},
+      {path: 'posts/add', element: <AddPost />},
+      {path: 'posts/:id/details', element: <DetailsPost />},
+      {path: 'posts/:id/edit', element: <EditPost />}
+    ]
   }
 ])
 

@@ -8,7 +8,7 @@ import {
 
 
 
-const PostList = () => {
+const PostsList = () => {
   return (
     <div>
         <Table striped bordered hover>
@@ -36,4 +36,4 @@ const PostList = () => {
   )
 }
 
-export default PostList
+export default PostsList
