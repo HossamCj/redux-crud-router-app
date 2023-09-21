@@ -20,7 +20,14 @@ const ErrorPage = () => {
                         <p>
                             <i>{ error.statusText || error.message }</i>
                         </p>
-                        <Button variant="primary" onClick={() => navigate('/', {replace: true})}>Home</Button>
+                        <Button 
+                            variant="primary" 
+                            onClick={
+                                () => navigate('/', {replace: true})
+                            }
+                        >
+                            Home
+                        </Button>
 
                     </div>
                 </Col>

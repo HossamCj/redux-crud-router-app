@@ -25,8 +25,22 @@ const router = createBrowserRouter([
       {index: true, element: <Index />},
       {path: 'posts', element: <Index />},
       {path: 'posts/add', element: <AddPost />},
-      {path: 'posts/:id/details', element: <DetailsPost />},
-      {path: 'posts/:id/edit', element: <EditPost />}
+      {
+        path: 'posts/:id/details', 
+        element: <DetailsPost />,
+        loader:  ({ params }) => {
+          if (isNaN(params.id)) {
+            throw new Response('Bad Request', {
+              statusText: "Make sure you insert the right URL", 
+              status: 400 
+            })
+          }
+        }
+      },
+      {
+        path: 'posts/:id/edit',
+        element: <EditPost />,
+      }
     ]
   }
 ])
