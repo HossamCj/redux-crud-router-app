@@ -40,6 +40,14 @@ const router = createBrowserRouter([
             {
                 path: "posts/:id/edit",
                 element: <EditPost />,
+                loader: ({params}) => {
+                    if (isNaN(params.id)) {
+                        throw new Response("Bad Request", {
+                            statusText: "The ID of the user is not a number",
+                            status: 400,
+                        });
+                    }
+                },
             },
         ],
     },

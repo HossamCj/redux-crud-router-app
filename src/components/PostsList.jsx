@@ -1,8 +1,8 @@
-import React from "react";
+import React, {memo} from "react";
 import {Table} from "react-bootstrap";
 import PostListItem from "./PostListItem";
 
-const PostsList = ({data}) => {
+const PostsList = ({data, deleteRecord}) => {
     return (
         <div>
             <Table striped bordered hover>
@@ -14,11 +14,11 @@ const PostsList = ({data}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <PostListItem data={data} />
+                    <PostListItem data={data} deleteRecord={deleteRecord} />
                 </tbody>
             </Table>
         </div>
     );
 };
 
-export default PostsList;
+export default memo(PostsList);
