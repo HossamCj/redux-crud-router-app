@@ -7,7 +7,7 @@ import Loading from "../components/Loading";
 
 const Index = () => {
     const dispatch = useDispatch();
-    const {records, loading, error} = useSelector((state) => state);
+    const {records, loading, error} = useSelector((state) => state.posts);
 
     useEffect(() => {
         dispatch(fetchPosts());

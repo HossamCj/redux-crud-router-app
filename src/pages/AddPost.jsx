@@ -1,29 +1,34 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {insertPost} from "../state/postSlice";
 import {Form, Button} from "react-bootstrap";
 
-import {insertPost} from "../state/postSlice";
-
 const AddPost = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
-    const dispatch = useDispatch();
-
     const formHandler = (e) => {
         e.preventDefault();
-
         const id = Math.floor(Math.random() * 500);
-        dispatch(insertPost({id, title, description}));
+        dispatch(insertPost({id, title, description}))
+            .unwrap()
+            .then(() => {
+                navigate("/");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
-
     return (
         <Form onSubmit={formHandler}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Insert your title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />

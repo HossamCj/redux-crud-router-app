@@ -1,5 +1,3 @@
-import React from "react";
-
 import {Button, ButtonGroup} from "react-bootstrap";
 
 const PostListItem = ({data, deleteRecord}) => {
