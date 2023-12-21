@@ -1,4 +1,5 @@
 import {Button, ButtonGroup} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const PostListItem = ({data, deleteRecord}) => {
     const deleteHandler = (item) => {
@@ -10,7 +11,9 @@ const PostListItem = ({data, deleteRecord}) => {
     const records = data.map((element, index) => (
         <tr key={index}>
             <td>{++index}</td>
-            <td>{element.title}</td>
+            <td>
+                <Link to={`posts/${element.id}/details`}>{element.title}</Link>
+            </td>
             <td>
                 <ButtonGroup aria-label="Basic example">
                     <Button variant="success">Edit</Button>
