@@ -54,6 +54,7 @@ export const insertPost = createAsyncThunk(
         }
     }
 );
+
 export const editPost = createAsyncThunk(
     "posts/editPost",
     async (item, thunkAPI) => {
