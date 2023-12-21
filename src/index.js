@@ -16,6 +16,15 @@ import DetailsPost from "./pages/DetailsPost";
 import EditPost from "./pages/EditPost";
 import ErrorPage from "./pages/ErrorPage";
 
+const postParamHandler = ({params}) => {
+    if (isNaN(params.id)) {
+        throw new Response("Bad Request", {
+            statusText: "please make sure you insert correct post ID",
+            status: 400,
+        });
+    }
+};
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -28,26 +37,12 @@ const router = createBrowserRouter([
             {
                 path: "posts/:id/details",
                 element: <DetailsPost />,
-                loader: ({params}) => {
-                    if (isNaN(params.id)) {
-                        throw new Response("Bad Request", {
-                            statusText: "Make sure you insert the right URL",
-                            status: 400,
-                        });
-                    }
-                },
+                loader: postParamHandler,
             },
             {
                 path: "posts/:id/edit",
                 element: <EditPost />,
-                loader: ({params}) => {
-                    if (isNaN(params.id)) {
-                        throw new Response("Bad Request", {
-                            statusText: "The ID of the user is not a number",
-                            status: 400,
-                        });
-                    }
-                },
+                loader: postParamHandler,
             },
         ],
     },
