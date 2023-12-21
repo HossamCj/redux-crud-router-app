@@ -16,17 +16,16 @@ export const fetchPosts = createAsyncThunk(
     }
 );
 
-export const deletePost = createAsyncThunk(
-    "posts/deletePost",
+export const fetchPost = createAsyncThunk(
+    "posts/fetchPost",
     async (id, thunkAPI) => {
         const {rejectWithValue} = thunkAPI;
 
         try {
-            await fetch(`http://localhost:3005/posts/${id}`, {
-                method: "DELETE",
-            });
+            const response = await fetch(`http://localhost:3005/posts/${id}`);
+            const data = await response.json();
 
-            return id;
+            return data;
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -55,16 +54,19 @@ export const insertPost = createAsyncThunk(
         }
     }
 );
-
-export const fetchPost = createAsyncThunk(
-    "posts/fetchPost",
-    async (id, thunkAPI) => {
+export const editPost = createAsyncThunk(
+    "posts/editPost",
+    async (item, thunkAPI) => {
         const {rejectWithValue} = thunkAPI;
-
         try {
-            const response = await fetch(`http://localhost:3005/posts/${id}`);
-            const data = await response.json();
-
+            const res = await fetch(`http://localhost:3005/posts/${item.id}`, {
+                method: "PATCH",
+                body: JSON.stringify(item),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            });
+            const data = await res.json();
             return data;
         } catch (error) {
             return rejectWithValue(error.message);
@@ -72,10 +74,30 @@ export const fetchPost = createAsyncThunk(
     }
 );
 
+export const deletePost = createAsyncThunk(
+    "posts/deletePost",
+    async (id, thunkAPI) => {
+        const {rejectWithValue} = thunkAPI;
+
+        try {
+            await fetch(`http://localhost:3005/posts/${id}`, {
+                method: "DELETE",
+            });
+
+            return id;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 const postSlice = createSlice({
     name: "posts",
     initialState,
-    reducers: {},
+    reducers: {
+        cleanRecord: (state) => {
+            state.record = null;
+        },
+    },
     extraReducers: {
         //fetch posts
         [fetchPosts.pending]: (state) => {
@@ -105,7 +127,7 @@ const postSlice = createSlice({
             state.error = action.payload;
         },
 
-        // Get Post / Fetch Post
+        // Get Post / Fetch Post / Post Details
         [fetchPost.pending]: (state) => {
             state.loading = true;
             state.record = null;
@@ -135,7 +157,23 @@ const postSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+
+        // Edit Post
+        [editPost.pending]: (state) => {
+            state.loading = true;
+            state.error = null;
+        },
+        [editPost.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.record = action.payload;
+        },
+        [editPost.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
     },
 });
+
+export const {cleanRecord} = postSlice.actions;
 
 export default postSlice.reducer;
