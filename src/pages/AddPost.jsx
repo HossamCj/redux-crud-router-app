@@ -5,6 +5,7 @@ import {insertPost} from "../state/postSlice";
 import {Form, Button} from "react-bootstrap";
 
 import Loading from "../components/Loading";
+import withGuard from "../utils/withGuard";
 
 const AddPost = () => {
     const navigate = useNavigate();
@@ -57,4 +58,4 @@ const AddPost = () => {
     );
 };
 
-export default AddPost;
+export default withGuard(AddPost);
