@@ -3,6 +3,7 @@ import usePostDetails from "../hooks/use-post-details";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
+import withGuard from "../utils/withGuard";
 import {editPost, cleanRecord} from "../state/postSlice";
 import Loading from "../components/Loading";
 import {Form, Button} from "react-bootstrap";
@@ -71,4 +72,4 @@ const EditPost = () => {
     );
 };
 
-export default EditPost;
+export default withGuard(EditPost);
