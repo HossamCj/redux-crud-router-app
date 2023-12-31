@@ -91,6 +91,7 @@ export const deletePost = createAsyncThunk(
         }
     }
 );
+
 const postSlice = createSlice({
     name: "posts",
     initialState,
@@ -99,79 +100,77 @@ const postSlice = createSlice({
             state.record = null;
         },
     },
-    extraReducers: {
-        //fetch posts
-        [fetchPosts.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(fetchPosts.pending, (state) => {
             state.loading = true;
             state.error = null;
-        },
-        [fetchPosts.fulfilled]: (state, action) => {
+        });
+        builder.addCase(fetchPosts.fulfilled, (state, action) => {
             state.loading = false;
             state.records = action.payload;
-        },
-        [fetchPosts.rejected]: (state, action) => {
+        });
+        builder.addCase(fetchPosts.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
-        },
+        });
 
         //create post
-        [insertPost.pending]: (state) => {
+        builder.addCase(insertPost.pending, (state) => {
             state.loading = true;
             state.error = null;
-        },
-        [insertPost.fulfilled]: (state, action) => {
+        });
+        builder.addCase(insertPost.fulfilled, (state, action) => {
             state.loading = false;
             state.records.push(action.payload);
-        },
-        [insertPost.rejected]: (state, action) => {
+        });
+        builder.addCase(insertPost.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
-        },
+        });
 
         // Get Post / Fetch Post / Post Details
-        [fetchPost.pending]: (state) => {
+        builder.addCase(fetchPost.pending, (state) => {
             state.loading = true;
-            state.record = null;
             state.error = null;
-        },
-        [fetchPost.fulfilled]: (state, action) => {
+        });
+        builder.addCase(fetchPost.fulfilled, (state, action) => {
             state.loading = false;
             state.record = action.payload;
-        },
-        [fetchPost.rejected]: (state, action) => {
+        });
+        builder.addCase(fetchPost.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
-        },
+        });
 
         //delete post
-        [deletePost.pending]: (state) => {
+        builder.addCase(deletePost.pending, (state) => {
             state.loading = true;
             state.error = null;
-        },
-        [deletePost.fulfilled]: (state, action) => {
+        });
+        builder.addCase(deletePost.fulfilled, (state, action) => {
             state.loading = false;
             state.records = state.records.filter(
                 (element) => element.id !== action.payload
             );
-        },
-        [deletePost.rejected]: (state, action) => {
+        });
+        builder.addCase(deletePost.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
-        },
+        });
 
         // Edit Post
-        [editPost.pending]: (state) => {
+        builder.addCase(editPost.pending, (state) => {
             state.loading = true;
             state.error = null;
-        },
-        [editPost.fulfilled]: (state, action) => {
+        });
+        builder.addCase(editPost.fulfilled, (state, action) => {
             state.loading = false;
             state.record = action.payload;
-        },
-        [editPost.rejected]: (state, action) => {
+        });
+        builder.addCase(editPost.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
-        },
+        });
     },
 });
 

@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import usePostDetails from "../hooks/use-post-details";
 import {useDispatch} from "react-redux";
-import {editPost, cleanRecord} from "../state/postSlice";
 import {useNavigate} from "react-router-dom";
 
+import {editPost, cleanRecord} from "../state/postSlice";
 import Loading from "../components/Loading";
 import {Form, Button} from "react-bootstrap";
 
