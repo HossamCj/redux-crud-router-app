@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Suspense} from "react";
 import ReactDOM from "react-dom/client";
 import {Provider} from "react-redux";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
@@ -11,10 +11,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Components
 import Index from "./pages/index";
 import RootLayout from "./pages/RootLayout";
-import AddPost from "./pages/AddPost";
-import DetailsPost from "./pages/DetailsPost";
-import EditPost from "./pages/EditPost";
 import ErrorPage from "./pages/ErrorPage";
+
+const AddPost = React.lazy(() => import("./pages/AddPost"));
+const EditPost = React.lazy(() => import("./pages/EditPost"));
+const DetailsPost = React.lazy(() => import("./pages/DetailsPost"));
 
 const postParamHandler = ({params}) => {
     if (isNaN(params.id)) {
@@ -33,15 +34,30 @@ const router = createBrowserRouter([
         children: [
             {index: true, element: <Index />},
             {path: "posts", element: <Index />},
-            {path: "posts/add", element: <AddPost />},
+            {
+                path: "posts/add",
+                element: (
+                    <Suspense fallback="Loading, Please wait...">
+                        <AddPost />
+                    </Suspense>
+                ),
+            },
             {
                 path: "posts/:id/details",
-                element: <DetailsPost />,
+                element: (
+                    <Suspense fallback="Loading, Please wait...">
+                        <DetailsPost />
+                    </Suspense>
+                ),
                 loader: postParamHandler,
             },
             {
                 path: "posts/:id/edit",
-                element: <EditPost />,
+                element: (
+                    <Suspense fallback="Loading, Please wait...">
+                        <EditPost />
+                    </Suspense>
+                ),
                 loader: postParamHandler,
             },
         ],
