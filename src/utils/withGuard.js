@@ -5,7 +5,7 @@ const withGuard = (Component) => {
         const {isLoggedIn} = useSelector((state) => state.auth);
 
         return isLoggedIn ? (
-            <Component {...props} />
+            <Component {...props} age="30" />
         ) : (
             <div>Please Login to Add new post!</div>
         );
